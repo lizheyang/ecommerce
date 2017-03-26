@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% load bootstrap3 %}
+
+{% block head %}
+{{ block.super }}
+
+{% load static %}
+<link rel="stylesheet" href="{% static "css/product.css" %}" type="text/css" />
+
+{% endblock %}
+
+{% block title %}{{ p.name }}{% endblock %}
+
+{% block page_content %}
+<div class="container">
+    <div class="row" style="border:1px solid #E8E8E8; padding:20px 20px 20px 20px">
+        <div class="col-md-5 product-img ">
+            <div style="weight: 430px; height: 430px;text-align:center;display:table;">
+                <div style="display:table-cell; vertical-align:middle">
+                    <img src="{{ p.image.url }}" class="img-responsive" />
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5 product-info">
+            <div class="p-title">
+                <div class="p-name"><h3>{{ p.name }}</h3></div>
+                <div class="p-sub-title">增加一个sub_title字段</div>
+            </div>            
+            <div class="p-brand">
+                <span>品牌</span>
+                {{ p.brand }}
+            </div>
+            <ul id="prices">
+                <li class="old-price">
+                    <span>原价</span>
+                    <div class="old-price-number">
+                        <strong style="font-size: 14px; color: rgb(60, 60, 60); font-weight: 400; text-decoration: line-through;">
+                        <em class="rmb">¥</em>
+                        <em class="rmb-num">{{ p.price }}</em>
+                        </strong>        
+                    </div>
+                </li>
+
+                <li  class="discount-price">
+                    <span>折扣价</span>
+                    <div class="discount-price-number">
+                        <div class="discount-price-number">
+                            <strong style="font-size: 26px; font-weight: 700;color: #F40;">
+                                <em class="rmb">¥</em>
+                                <em id="tmp" class="rmb-num">{{ p.discount_price }}</em>
+                            </strong>
+                        </div>
+                    </div>           
+                </li>
+            </ul>
+            <div class="quantity">
+                <span>剩余数量</span>
+                {{ p.quantity }}
+            </div>            
+        </div>
+        <div class="col-md-2 right-btns">
+            <div id='add-cart-btn'>
+                <form role="form">
+                    <div class="form-group row">
+                    <label class="control-label col-sm-4" for="number" style="font-size:15px">数量</label>
+                        <div class=" col-sm-8">
+                            <input  type="number" class="form-control" value="1">
+                        </div>
+                    </div>
+                </form>
+                <button type="button" class="btn btn-default btn-block">加入购物车</button>
+            </div>
+            <div id='collect-btn'>
+                <button type="button" class="btn btn-default btn-block">收藏商品</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container" style="margin-top:30px; display:block">
+        <div class="row ">
+            <div class="col-md-3 recommens" style="border:1px solid #E8E8E8">
+                竖列表的商品推荐
+            </div>
+		    <div class="col-md-9 column">
+			    <ul class="nav nav-tabs">
+				    <li class="active">
+					    <a href="#">详细信息</a>
+				    </li>
+				    <li>
+					     <a href="#">商品评论</a>
+				    </li>
+			    </ul>
+		</div>
+	</div>
+    </div>
+{% endblock %}

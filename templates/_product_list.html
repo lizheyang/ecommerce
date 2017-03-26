@@ -1,0 +1,35 @@
+<div class="container">
+<div class="row">
+{% for p in products %}
+	<div class="col-md-3">
+	<div class="thumbnail">
+		<img src="{{ p.thumb.url }}" alt="缩略图">
+		<div class="caption">
+			<div class="row-1">
+			<strong> ¥ {{ p.price }}</strong>
+			</div>
+			<div class="row-2" style="weight="75px"; overflow:hidden">
+			<a style="font-size:20px" href="/product/{{ p.id }}" >{{ p.name }}</a>
+			<p>{{ p.subtitle }}</p>
+			</div>
+			<!-- <div class="row-3"><p><a href="#" class="btn btn-primary btn-block" role="button">加入购物车</a></p></div> -->
+		</div>
+	</div>
+	</div>
+{% endfor %}
+</div>
+
+<div class="row" style="float:right;">
+<ul class="pagination" >
+	{% if products.has_previous %}
+    <li><a href="?page={{ products.previous_page_number }}">&laquo;</a></li>
+    {% endif %}
+    {% for num in paginator.page_range %}
+    <li><a href="?page={{ num }}">{{ num }}</a></li>
+    {% endfor %}
+    {% if products.has_next %}
+    <li><a href="?page={{ products.next_page_number }}">&raquo;</a></li>
+    {% endif %}
+</ul>
+</div>
+</div>

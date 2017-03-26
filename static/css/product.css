@@ -1,0 +1,53 @@
+.p-name h3 {
+    font: 700 16px Arial,"microsoft yahei";
+    color: #666;
+    padding-top: 10px;
+    line-height: 28px;
+    margin-bottom: 5px;
+}
+
+.p-sub-title {
+	margin-top: 5px;
+    padding-bottom: 15px;
+    color: #6C6C6C;
+    border-bottom: 1px dotted #D9D9D9;
+}
+
+.p-brand {
+	padding-top: 10px;
+	padding-bottom: 10px;
+
+}
+
+#prices {
+	list-style: none;
+	padding: 10px;
+    background-color: #FFF2E8;
+}
+
+.product-info span{
+	display: inline;
+    float: left;
+    width: 60px;
+    color: #6c6c6c;
+}
+
+#prices li{
+	line-height: 24px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.right-btns {
+	padding: 14px 18px 14px 18px;
+	border:1px solid #E8E8E8;
+}
+.right-btns button{
+	padding: 10px 0 10px 0;
+	margin: 5px 5px 5px 0;
+	
+}
+
+#add-cart-btn{
+	border-bottom: 1px dotted #D9D9D9;
+}
