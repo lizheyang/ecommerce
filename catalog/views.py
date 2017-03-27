@@ -18,8 +18,10 @@ def index(request):
     return render(request, 'index.html', locals())
 
 
-def show_categories(request):
-    pass
+def show_categories(request, category_id):
+    category = get_object_or_404(Category, id=category_id)
+    products = Product.objects.filter(categories__id=category_id)
+    return render(request, 'catalog/category.html', locals())
 
 
 def show_product(request, product_id):
