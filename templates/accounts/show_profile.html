@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% load bootstrap3 %}
+
+{% block title %}个人信息 {% endblock %}
+
+{% block page_content %}
+<div class="row">
+	<div  style="margin-left:auto; margin-right:auto; width:30%">
+		{{ profile.phone }}
+		<hr>
+		{{ request.user.username}}
+		<hr>
+		<p>balabala...</p>
+		<a  class="btn btn-primary" href="/accounts/edit_profile/">
+        edit_profile
+		</a>
+	</div>
+	
+</div>
+{% endblock %}

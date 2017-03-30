@@ -38,7 +38,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bootstrap3',
-    'catalog'
+    'catalog',
+    'accounts'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -107,3 +108,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'imgs')
 MEDIA_URL = '/imgs/'
 
 LOGIN_REDIRECT_URL = '/accounts/my_account/'
+
+AUTH_PROFILE_MODULE = 'accounts.userprofile'

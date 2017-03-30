@@ -3,5 +3,8 @@
 {% block title %} 个人主页 {% endblock %}
 
 {% block page_content %}
-<p>hello {{ user.username }}
+<p>hello {{ user.username }}</p>
+<a  class="btn btn-primary" href="/accounts/show_profile/">
+        show_profile
+</a>
 {% endblock %}
