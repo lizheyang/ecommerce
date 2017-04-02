@@ -8,6 +8,7 @@ class UserProfile(models.Model):
         ('F', '女'),
     )
     user = models.ForeignKey(User, unique=True)
+    nikename = models.CharField(blank=True, max_length=20, verbose_name='昵称')
     email = models.EmailField(blank=True, verbose_name='电子邮箱')
     gender = models.CharField(max_length=2, choices=GENDER_CHOICES, verbose_name='性别')
     phone = models.CharField(max_length=20, blank=True, verbose_name='手机号码')

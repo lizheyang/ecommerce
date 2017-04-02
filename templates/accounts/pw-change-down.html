@@ -1,0 +1,18 @@
+{% extends "accounts/accounts-base.html" %}
+{% load i18n %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content_title %}<h1>{{ title }}</h1>{% endblock %}
+
+
+{% block account_content %}
+<p>{% trans 'Your password was changed.' %}</p>
+
+<!-- <script>
+$(function(){
+	
+ 
+});
+</script> -->
+{% endblock %}

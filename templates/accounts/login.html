@@ -6,12 +6,12 @@
 
 {% block page_content %}
 <div class="row">
-	<div  style="margin-left:auto; margin-right:auto; width:30%">
+	<div  style="margin-left:auto; margin-right:auto; width:40%">
 		<form action="/accounts/login/" method="post" class="form">
 		{% csrf_token %}
 		{% bootstrap_form form %}
 		<button type="submit" class="btn btn-primary">
-            Submit
+            登录
         </button>
 		</form>
 	</div>

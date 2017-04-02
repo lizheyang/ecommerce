@@ -1,10 +1,13 @@
+import os
+from PIL import Image
 from django.shortcuts import render, render_to_response, get_object_or_404, redirect
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.core import urlresolvers
-from django.http import HttpResponseRedirect
-
+from django.http import HttpResponseRedirect, HttpResponse
+from django.utils.translation import ugettext as _
+from ecommerce.settings import MEDIA_ROOT
 from .forms import UserProfileForm
 from .models import UserProfile
 
@@ -40,6 +43,21 @@ def edit_profile(request):
         if form.is_valid():
             setprofile(request)
             url = urlresolvers.reverse('show_profile')
+            if request.FILES.get('photo'):
+                photo = request.FILES['photo']
+                photo_ext = str(photo).split('.')[-1]
+                photo_name = '%s.%s'%(request.user.username, photo_ext)
+                img = Image.open(photo)
+                img_path = os.path.join(MEDIA_ROOT, 'accounts')
+                img_name = os.path.join(img_path, photo_name)
+                img.save(img_name)
+                count = UserProfile.objects.filter(user=request.user).update(
+                    photo='accounts/' + photo_name
+                )
+                if count:
+                    return HttpResponseRedirect(url)
+                else:
+                    return HttpResponse('头像上传失败')
             return HttpResponseRedirect(url)
     else:
         user_profile = retrieve(request)
@@ -53,8 +71,22 @@ def show_profile(request):
     return render(request, 'accounts/show_profile.html', locals())
 
 
+@login_required
+def my_password_change_done(request, current_app=None, extra_context=None):
+    context = {
+        'title': _('Password change successful'),
+    }
+    if extra_context is not None:
+        context.update(extra_context)
+
+    if current_app is not None:
+        request.current_app = current_app
+
+    return render(request, 'accounts/pw-change-down.html', context)
+
 
 def retrieve(request):
+    # 根据request查找用户profile，如果还没有则创建
     try:
         profile = get_object_or_404(UserProfile, user=request.user)
     except:
@@ -64,6 +96,7 @@ def retrieve(request):
 
 
 def setprofile(request):
+    # 根据request查找用户profile,然后实例化ProfileFrom
     profile = retrieve(request)
     profile_form = UserProfileForm(request.POST, instance=profile)
     profile_form.save()
