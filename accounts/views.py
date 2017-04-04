@@ -89,7 +89,7 @@ def retrieve(request):
     # 根据request查找用户profile，如果还没有则创建
     try:
         profile = get_object_or_404(UserProfile, user=request.user)
-    except:
+    except UserProfile.DoesNotExist:
         profile = UserProfile(user=request.user)
         profile.save()
     return profile

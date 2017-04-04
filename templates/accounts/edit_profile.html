@@ -5,6 +5,7 @@
 {% block title %}修改个人信息 {% endblock %}
 
 {% block account_content %}
+<div class="container">
 <div class="row">
 	<div  style="margin-left:auto; margin-right:auto; width:50%">
 		<form action="{% url 'edit_profile' %}" method="post" class="form" enctype="multipart/form-data">
@@ -15,5 +16,6 @@
         </button>
 		</form>
 	</div>
+</div>
 </div>
 {% endblock %}

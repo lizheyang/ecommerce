@@ -39,6 +39,10 @@ class Product(models.Model):
         db_table = 'products'
         ordering = ['-created_at']
 
+    @models.permalink
+    def get_absolute_url(self):
+        return ('product', (), {'product_id': self.id})
+
     @staticmethod
     def make_thumb(path, size=220):
         img = Image.open(path)

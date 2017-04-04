@@ -3,8 +3,10 @@
 {% block title %} 个人主页 {% endblock %}
 
 {% block accounts_content %}
+<div class="container">
 <p>hello {{ user.username }}</p>
 <a  class="btn btn-primary" href="/accounts/show_profile/">
         show_profile
 </a>
+</div>
 {% endblock %}

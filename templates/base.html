@@ -5,6 +5,8 @@
 <head>
     <meta charset="UTF-8">
     <link href="//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    {% load static %}
+	<link rel="stylesheet" href="{% static 'css/common.css' %}" type="text/css" />
     <title>{% block title %}豫见{% endblock %}</title>
 </head>
 {% endblock %}
@@ -26,7 +28,7 @@
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
 						<li>
-							 <a href="#">购物车</a>
+							 <a href="{% url 'show_cart' %}">购物车</a>
 						</li>
 						{% if user.is_authenticated %}
 						<li class="dropdown">
@@ -64,9 +66,9 @@
     {% endblock %}
 
 {% block content %}
-    <div class="container" style="background-color: white ;">
-        {%block page_content %}{% endblock %}
-    </div>
+
+{%block page_content %}{% endblock %}
+
 {% endblock %}
 
 </body>
