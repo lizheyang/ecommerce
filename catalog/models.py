@@ -15,6 +15,8 @@ class Category(models.Model):
     class Meta:
         db_table = 'categories'
         ordering = ['-created_at']
+        verbose_name = '商品分类'
+        verbose_name_plural = '商品分类'
 
     def __str__(self):
         return self.name
@@ -38,6 +40,8 @@ class Product(models.Model):
     class Meta:
         db_table = 'products'
         ordering = ['-created_at']
+        verbose_name = '商品'
+        verbose_name_plural = '商品'
 
     @models.permalink
     def get_absolute_url(self):
