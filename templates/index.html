@@ -1,22 +1,23 @@
 {% extends "base.html" %}
 
+{% load staticfiles %}
 {% load bootstrap3 %}
 {% block title %}豫见{% endblock %}
 
 {% block page_content %}
-<div class="container">
-<div class="row" style="margin-bottom:20px">
-    <div class="col-md-2">
-        {% include "_categories_sidebar.html" %}
-
-    </div>
-    <div class="col-md-10">
-        {% include "_carousel.html" %}
-    </div>
+<div class="jumbotron">
+	<a href="/product/6">
+		<img class="img-responsive" src="{% static 'imgs/shanyao.jpg' %}"> 
+	</a>
+	<a href="/product/7">
+		<img class="img-responsive" src="{% static 'imgs/lihe.jpg' %}"> 
+	</a>
+	<a href="/product/8">
+		<img class="img-responsive" src="{% static 'imgs/dou.jpg' %}"> 
+	</a>
 </div>
-
-<div class="row">
+<div class="container">
 	{% include "_product_list.html" %}
 </div>
-</div>
+
 {% endblock %}
