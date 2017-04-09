@@ -15,13 +15,29 @@
 					<th>总计</th>
 				</tr>
 			</thead>
+			
 			<tbody>
 			{% if cart_items %}
 				{% for item in cart_items %}
 					<tr>
-						<td>{{ item.name }}</td>
+						<td>
+						<a href="{{ item.get_absolute_url }}">
+							<p style="font-size: 18px;">{{ item.name }}</p>
+						</a>
+						</td>
 						<td>{{ item.price }}</td>
-						<td>{{ item.quantity }}</td>
+						<td>
+							<form method="post" action=".">
+								{% csrf_token %}
+								<input type="number" name="quantity" value="{{ item.quantity }}" 
+								style="width:60px; height:28px"/>
+								<input type="hidden" name="item_id" value="{{ item.id }}" />
+								<button class="btn btn-sm btn-default" type="submit" name="submit" value="Update" style="height:30px">更新数量 
+								</button>
+								<button class="btn btn-sm btn-default" type="submit" name="submit" value="Remove" style="height:30px">删除
+								</button>
+							</form>
+						</td>
 						<td>{{ item.total }}
 					</tr>
 				{% endfor %}
@@ -30,8 +46,22 @@
 			</tbody>
 
 		</table>
-
-		<p style="float:right">总计：{{ cart_subtotal }}</p>
+		<div>
+			<p style="float:right; display:block">
+				<span style="text-align:right">总计: </th>
+				<span style="text-align:right; font-size:20px">{{ cart_subtotal }}</th>
+			</p>
+		</div>
+			<p class="clearfix"></p>
+			{% if cart_items %}	
+			<div>			
+				<p style="display:block; float:right">
+					<a class="btn btn-primary" href="#">立即结算</a>
+				</p>
+			</div>
+			{% endif %}
+		
+		
     </div>
 </div>
 {% endblock %}

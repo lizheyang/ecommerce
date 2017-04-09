@@ -13,6 +13,9 @@ from .models import UserProfile
 
 
 def register(request):
+    if request.user.is_authenticated():
+        url = urlresolvers.reverse('my_account')
+        return HttpResponseRedirect(url)
     if request.method == 'POST':
         postdata = request.POST.copy()
         form = UserCreationForm(postdata)

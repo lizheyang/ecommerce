@@ -9,11 +9,6 @@
 /*.navbar {
 	margin-bottom: 0px;
 }*/
-
-.index-level-1 {
-	left:auto;right:auto;width:990px;height:608px;top:auto;padding:0;border:none;z-index:1;background:none;
-}
-
-.index-level-2 {
-	left:-465px;top:-10px;width:1920px;height:618px;border:none;padding:0;background:none;
+td {
+　　vertical-align: middle;
 }

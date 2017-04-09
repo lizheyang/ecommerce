@@ -49,9 +49,9 @@ dt {
 	</div>
 	<div class="profile-right col-md-6">
 
-	
+	{% if profile.photo %}
 	<img class="img-circle" src="{{ profile.photo.url }}">
-	
+	{% endif %}
 	</div>
 </div>
 </div>

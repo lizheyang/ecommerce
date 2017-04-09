@@ -21,11 +21,11 @@ class CartItem(models.Model):
     def price(self):
         return self.product.discount_price
 
-    def get_abs_url(self):
-        return self.product.get_abs_url()
+    def get_absolute_url(self):
+        return self.product.get_absolute_url()
 
     def augment_quantity(self, quantity):
-        self.quantity = self.quantity + int(quantity)
+        self.quantity += int(quantity)
         self.save()
 
 
