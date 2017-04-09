@@ -101,8 +101,39 @@
                         {% endautoescape %}
                     </div>
                     <div class="tab-pane fade" id="comments">
-                        <p>iOS 是一个由苹果公司开发和发布的手机操作系统。最初是于 2007 年首次发布 iPhone、iPod Touch 和 Apple 
-                            TV。iOS 派生自 OS X，它们共享 Darwin 基础。OS X 操作系统是用在苹果电脑上，iOS 是苹果的移动版本。</p>
+                        {% if request.user.is_authenticated %}
+                        <div class="add-comment" style="padding:20px; border-bottom:1px solid #E8E8E8;">
+                        <form action="{% url 'add_comment' %}" method="post" class="form" role="form">
+                            {% csrf_token %}
+                            <div class="form-group">
+                            <!-- <label for="comment-content">评论：</label> -->
+                            <textarea rows="3" class="form-control" name="content" id="comment-content"></textarea>
+                            </div>
+                            <input type="hidden" name="product_id" value="{{ p.id }}" />
+                            <input type="hidden" name="author_id" value="{{ request.user.id }}" />
+                            <div class="form-group">
+                            <button type="submit" class="btn btn-default" style="float:right">提交评论
+                            </button>
+                            </div>
+                            <div class="clearfix"> </div>
+                        </form>
+                        </div>
+                        {% endif %}
+                        <div class="comments">
+                            {% if comments %}
+                                {% for comment in comments %}
+                                <div class="singel-comment row" style="padding:10px; border-bottom:1px solid #E8E8E8;">
+                                    <div class="col-md-2 text-right">
+                                        {{ comment.author.username }}:
+                                    </div>
+                                    <div class="col-md-10 text-left">
+                                        {{ comment.content }}
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+
                     </div>
                     
                 </div>

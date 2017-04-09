@@ -2,9 +2,12 @@ from django.shortcuts import render, get_object_or_404
 from django.core import urlresolvers
 from django.http import HttpResponseRedirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from .models import Product, Category
+from catalog.models import Product, Category, Comment
+from catalog.form import AddCommentForm
 from cart import cart
 from cart.forms import AddToCartForm
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
 
 def index(request):
@@ -45,10 +48,31 @@ def show_product(request, product_id):
     else:
         form = AddToCartForm(request=request, label_suffix=':')
         form.fields['product_id'].widget.attrs['value'] = product_id
+        comment_form = AddCommentForm(request=request)
+        # comment_form.fields['product_id'].widget.attrs['value'] = product_id
+        # comment_form.fields['author_id'].widget.attrs['value'] = request.user.id
+        comments = Comment.objects.filter(product__id=product_id)
         request.session.set_test_cookie()
         return render(request, 'catalog/product.html', locals())
 
 
+@login_required
+def add_comment(request):
+    if request.method == 'POST':
+        postdata = request.POST.copy()
+        form = AddCommentForm(request, postdata)
+        if form.is_valid():
+            product_id = postdata.get('product_id', -1)
+            author_id = postdata.get('author_id', -1)
+            p = get_object_or_404(Product, id=int(product_id))
+            au = get_object_or_404(User, id=int(author_id))
+            comment = Comment()
+            comment.content = postdata.get('content', '')
+            comment.author = au
+            comment.product = p
+            comment.save()
+            url = urlresolvers.reverse('product', args=(p.id,))
+            return HttpResponseRedirect(url)
 
 
 

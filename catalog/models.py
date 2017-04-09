@@ -3,6 +3,7 @@ from PIL import Image
 from django.db import models
 from ecommerce.settings import MEDIA_ROOT
 from redactor.fields import RedactorField
+from django.contrib.auth.models import User
 
 
 # Create your models here.
@@ -67,3 +68,15 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
+
+class Comment(models.Model):
+    content = models.TextField(verbose_name='评论')
+    product = models.ForeignKey(Product)
+    author = models.ForeignKey(User)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = 'comments'
+        ordering = ['-created_at']
+        verbose_name = '评论'
+        verbose_name_plural = '评论'
