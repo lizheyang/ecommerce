@@ -96,7 +96,9 @@
 			    </ul>
                 <div id="myTabContent" class="tab-content">
                     <div class="tab-pane fade in active" id="details" >
-                        <p>{{ p.description}}</p>
+                        {% autoescape off %}
+                        {{ p.description}}
+                        {% endautoescape %}
                     </div>
                     <div class="tab-pane fade" id="comments">
                         <p>iOS 是一个由苹果公司开发和发布的手机操作系统。最初是于 2007 年首次发布 iPhone、iPod Touch 和 Apple 
