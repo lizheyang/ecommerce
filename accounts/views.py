@@ -8,8 +8,8 @@ from django.core import urlresolvers
 from django.http import HttpResponseRedirect, HttpResponse
 from django.utils.translation import ugettext as _
 from ecommerce.settings import MEDIA_ROOT
-from .forms import UserProfileForm
-from .models import UserProfile
+from .forms import UserProfileForm, UserAddressForm
+from .models import UserProfile, UserAddress
 
 
 def register(request):
@@ -103,3 +103,32 @@ def setprofile(request):
     profile = retrieve(request)
     profile_form = UserProfileForm(request.POST, instance=profile)
     profile_form.save()
+
+
+@login_required
+def show_address(request):
+    addresses = UserAddress.objects.filter(user=request.user)
+    return render(request, 'accounts/show_address.html', locals())
+
+
+@login_required
+def add_address(request):
+    if request.method == 'POST':
+        postdata = request.POST.copy()
+        form = UserAddressForm(postdata)
+        if form.is_valid():
+            address = UserAddress()
+            address.user = request.user
+            address.receiver_name = postdata.get('receiver_name', '')
+            address.receiver_phone = postdata.get('receiver_phone', '')
+            address.province = postdata.get('province', '')
+            address.city = postdata.get('city', '')
+            address.area = postdata.get('area', '')
+            address.detail_addr = postdata.get('detail_addr', '')
+            address.post_code = postdata.get('post_code', '')
+            address.save()
+            url = urlresolvers.reverse('show_address')
+            return HttpResponseRedirect(url)
+    else:
+        form = UserAddressForm()
+    return render(request, 'accounts/add_address.html', locals())

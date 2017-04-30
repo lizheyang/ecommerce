@@ -25,7 +25,7 @@
         <div class="col-md-5 product-info">
             <div class="p-title">
                 <div class="p-name"><h3>{{ p.name }}</h3></div>
-                <div class="p-sub-title">增加一个sub_title字段</div>
+                <div class="p-sub-title">{{ p.subtitle }}</div>
             </div>            
             <div class="p-brand">
                 <span>品牌</span>
@@ -46,7 +46,7 @@
                     <span>折扣价</span>
                     <div class="discount-price-number">
                         <div class="discount-price-number">
-                            <strong style="font-size: 26px; font-weight: 700;color: #F40;">
+                            <strong style="font-size: 26px; font-weight: 700;color: red;">
                                 <em class="rmb">¥</em>
                                 <em id="tmp" class="rmb-num">{{ p.discount_price }}</em>
                             </strong>

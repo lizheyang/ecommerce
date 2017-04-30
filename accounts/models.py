@@ -21,3 +21,15 @@ class UserProfile(models.Model):
         return 'User Profile for :' + self.user.username
 
 
+class UserAddress(models.Model):
+    user = models.ForeignKey(User)
+    receiver_name = models.CharField(max_length=20, verbose_name='收货人姓名')
+    receiver_phone = models.CharField(max_length=20, verbose_name='收货人电话')
+    province = models.CharField(max_length=20, verbose_name='省份')
+    city = models.CharField(max_length=20, verbose_name='城市')
+    area = models.CharField(max_length=20, verbose_name='地区')
+    detail_addr = models.TextField(verbose_name='详细地址')
+    post_code = models.CharField(max_length=10, verbose_name='邮编')
+
+    def __str__(self):
+        return 'Address, from ' + self.user.username + ' send to ' + self.receiver_name
