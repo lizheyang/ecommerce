@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}订单结算{% endblock %}
+
+{% block page_content %}
+<div class="container">
+	<div class="row">
+		<div>{{ order.status }}</div>
+		<div>{{ order.user.username }}</div>
+	</div>
+</div>
+{% endblock %}

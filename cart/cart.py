@@ -21,6 +21,11 @@ def get_cart_items(request):
     return CartItem.objects.filter(cart_id=_cart_id(request))
 
 
+def empty_cart(request):
+    user_cart = get_cart_items(request)
+    user_cart.delete()
+
+
 def add_to_cart(request):
     postdata = request.POST.copy()
     product_id = postdata.get('product_id', -1)
