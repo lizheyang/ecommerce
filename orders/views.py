@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from cart import cart
 from accounts.models import UserAddress
 from .models import Order, OrderItem
-import uuid
+from .util import generate_order_id
 
 
 def checkout(request):
@@ -23,7 +23,7 @@ def create_order(request):
         order = Order()
         order.user = request.user
         order.address = get_object_or_404(UserAddress, id=address_id)
-        order.order_id = str(uuid.uuid4())
+        order.id = generate_order_id()
         order.status = 1
         order.save()
         if order.pk:
@@ -32,16 +32,18 @@ def create_order(request):
                 oi = OrderItem()
                 oi.order = order
                 oi.quantity = item.quantity
-                oi.price = item.price
+                oi.price = item.price()
                 oi.product = item.product
                 oi.save()
             cart.empty_cart(request)
-            url = urlresolvers.reverse('order_page', args=(order.order_id,))
+            url = urlresolvers.reverse('order_page', args=(order.id,))
             return HttpResponseRedirect(url)
 
 
 def order_page(request, order_id):
-    order = get_object_or_404(Order, order_id=order_id)
+    order = get_object_or_404(Order, id=order_id)
+    order_items = OrderItem.objects.filter(order=order)
     return render(request, 'orders/order_page.html', locals())
+
 
 

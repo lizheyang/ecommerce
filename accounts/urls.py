@@ -19,4 +19,5 @@ urlpatterns = [
     url('^show_profile/$', views.show_profile, name='show_profile'),
     url('^show_address/$', views.show_address, name='show_address'),
     url('^add_address/$', views.add_address, name='add_address'),
+    url('^show_orders/$', views.show_orders, name='show_orders'),
     ]

@@ -1,10 +1,8 @@
 from django.db import models
-from django import forms
 from django.contrib.auth.models import User
 from catalog.models import Product
 from accounts.models import UserAddress
 import decimal
-import uuid
 
 
 class Order(models.Model):
@@ -16,7 +14,7 @@ class Order(models.Model):
         (5, '已取消'),
     )
 
-    order_id = models.CharField(max_length=50, default='')
+    id = models.CharField(max_length=50, default='', primary_key=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(User)
@@ -45,13 +43,13 @@ class OrderItem(models.Model):
     def total(self):
         return self.quantity * self.price
 
-    @property
-    def name(self):
-        return self.product.name
-
-    @property
-    def product_id(self):
-        return self.product.id
+    # @property
+    # def name(self):
+    #     return self.product.name
+    #
+    # @property
+    # def product_id(self):
+    #     return self.product.id
 
     def __str__(self):
         return self.product.name

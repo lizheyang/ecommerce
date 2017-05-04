@@ -1,0 +1,22 @@
+{% extends "accounts/accounts-base.html" %}
+
+{% block title %} 我的订单 {% endblock %}
+
+{% block account_content %}
+    <div class="row">
+        <div class="col-md-12" style="">
+        {% if my_orders %}
+            {% for order in my_orders %}
+            {% if order.id %}
+            <div class="order" style="border:1px solid #E8E8E8; padding: 5px; margin: 5px;">
+                <a href="/order/{{ order.id }}"> order: {{ order.id }} </a>
+            </div>
+            {% endif %}
+            {% endfor %}
+        {% else %}
+            <div><p>您还没有历史订单</p></div>
+        {% endif %}
+        
+        </div>
+    </div>
+{% endblock %}

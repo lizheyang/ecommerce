@@ -1,12 +1,63 @@
 {% extends "base.html" %}
 
-{% block title %}订单结算{% endblock %}
+{% block title %}订单详情{% endblock %}
 
 {% block page_content %}
 <div class="container">
 	<div class="row">
-		<div>{{ order.status }}</div>
-		<div>{{ order.user.username }}</div>
+		<div class='col-md-10' style="float: none;margin-left: auto;margin-right: auto;;">
+			<div id='order_id'>
+				<h3>订单编号：{{ order.id }}</h3>
+			</div>
+			<div id='order_status'>
+				<h3>订单状态：
+				{% if order.status == 1 %} 未支付
+				{% elif order.status == 2 %} 已支付
+				{% elif order.status == 3 %} 已发货
+				{% elif order.status == 4 %} 已完成
+				{% elif order.status == 5 %} 已取消
+				{% endif %}
+				</h3>
+			</div>
+			<div id='order_total'>
+				<h3>订单金额：¥{{ order.total }}</h3>
+			</div>
+			<div id='order_items'>
+				<h3>订单商品:</h3>
+				<div class='row' style="border: #E8E8E8 solid 1px; padding-top: 10px; margin-left: 20px;">
+				{% for item in order_items %}
+					<div class='row order_item'>
+						<div class='col-md-6'>
+						<a href="{{ item.product.get_absolute_url }}">
+							<p style="font-size: 18px; margin-left: 10px;">{{ item.product.name }}</p>
+						</a>
+						</div>
+						<div class='col-md-2'>¥{{ item.price }}</div>
+						<div class='col-md-2'>x{{ item.quantity }}</div>
+						<div class='col-md-2'>¥{{ item.total }}</div>
+						<div class='clear'></div>
+					</div>
+				{% endfor %}
+				</div>				
+			</div>
+			<div id='order_address'>
+				<h3>配送地址:</h3>
+				<div class="addr row" style="border:1px solid #E8E8E8; margin-left: 20px;">
+				<div style="margin-left: 10px;">
+	                <p class="addr_recevier">
+	                收货人：{{ order.address.receiver_name }}  
+	                电话：{{ order.address.receiver_phone }}
+	                </p>
+	                <p class="post_code">邮编：{{ order.address.post_code }}</p>
+	                <p class="addr_pca">
+	                {{ order.address.province }} {{ order.address.city }} {{ order.address.area }}
+	                {{ order.address.detail_addr }}
+	                </p>
+	            </div>
+            	</div>
+			</div>
+			<div style="margin-bottom: 30px;"></div>
+		</div>
 	</div>
 </div>
 {% endblock %}

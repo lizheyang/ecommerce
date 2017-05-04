@@ -10,6 +10,7 @@ from django.utils.translation import ugettext as _
 from ecommerce.settings import MEDIA_ROOT
 from .forms import UserProfileForm, UserAddressForm
 from .models import UserProfile, UserAddress
+from orders.models import Order
 
 
 def register(request):
@@ -132,3 +133,9 @@ def add_address(request):
     else:
         form = UserAddressForm()
     return render(request, 'accounts/add_address.html', locals())
+
+
+@login_required
+def show_orders(request):
+    my_orders = Order.objects.filter(user=request.user)
+    return render(request, 'accounts/show_orders.html', locals())
