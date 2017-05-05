@@ -9,8 +9,9 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.utils.translation import ugettext as _
 from ecommerce.settings import MEDIA_ROOT
 from .forms import UserProfileForm, UserAddressForm
-from .models import UserProfile, UserAddress
+from .models import UserProfile, UserAddress, UserCollection
 from orders.models import Order
+from catalog.models import Product
 
 
 def register(request):
@@ -137,5 +138,33 @@ def add_address(request):
 
 @login_required
 def show_orders(request):
-    my_orders = Order.objects.filter(user=request.user)
+    my_orders = Order.objects.filter(user=request.user).order_by('-created_at')
     return render(request, 'accounts/show_orders.html', locals())
+
+
+@login_required
+def show_collections(request):
+    my_collections = UserCollection.objects.filter(user=request.user).order_by('-created_at')
+    products = []
+    if my_collections:
+        products = [col.product for col in my_collections]
+    return render(request, 'accounts/show_collections.html', locals())
+
+
+@login_required
+def add_collection(request, product_id):
+    collection = UserCollection()
+    collection.product = Product.objects.get(id=product_id)
+    collection.user = request.user
+    collection.save()
+    url = urlresolvers.reverse('show_collections')
+    return HttpResponseRedirect(url)
+
+
+@login_required
+def delete_collection(request, product_id):
+    product = Product.objects.get(id=product_id)
+    collection = UserCollection.objects.get(product=product, user=request.user)
+    collection.delete()
+    url = urlresolvers.reverse('show_collections')
+    return HttpResponseRedirect(url)

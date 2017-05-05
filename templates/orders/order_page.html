@@ -18,9 +18,22 @@
 				{% elif order.status == 5 %} 已取消
 				{% endif %}
 				</h3>
+				<div style="margin-left: 20px;">
+				{% if order.status == 1 %}
+				<a href="{% url 'payment' order.id %}"	class="btn btn-primary">立即支付</a>
+				<a href="{% url 'cancel_order' order.id %}"	class="btn btn-primary">取消订单</a>
+				{% elif order.status != 5  and order.express_company %}
+				<p>快递公司：{{ order.express_company }}</p>
+				<p>快递单号：{{ order.express_number }}</p>
+				<a href="http://www.kuaidi100.com/">点击此处查询快递</a>
+				{% endif %}
+				</div>
 			</div>
 			<div id='order_total'>
 				<h3>订单金额：¥{{ order.total }}</h3>
+			</div>
+			<div id='order_date'>
+				<h3>订单日期：{{ order.created_at |date:"Y-m-d H:i:s" }}</h3>
 			</div>
 			<div id='order_items'>
 				<h3>订单商品:</h3>
@@ -45,7 +58,8 @@
 				<div class="addr row" style="border:1px solid #E8E8E8; margin-left: 20px;">
 				<div style="margin-left: 10px;">
 	                <p class="addr_recevier">
-	                收货人：{{ order.address.receiver_name }}  
+	                收货人：{{ order.address.receiver_name }}
+	                <span style="margin-right: 10px;"></span>
 	                电话：{{ order.address.receiver_phone }}
 	                </p>
 	                <p class="post_code">邮编：{{ order.address.post_code }}</p>

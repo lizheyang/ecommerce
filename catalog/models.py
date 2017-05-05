@@ -15,6 +15,7 @@ class Category(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
+        app_label = 'catalog'
         db_table = 'categories'
         ordering = ['-created_at']
         verbose_name = '商品分类'
@@ -39,6 +40,7 @@ class Product(models.Model):
     categories = models.ManyToManyField(Category)
 
     class Meta:
+        app_label = 'catalog'
         db_table = 'products'
         ordering = ['-created_at']
         verbose_name = '商品'
@@ -76,6 +78,7 @@ class Comment(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
+        app_label = 'catalog'
         db_table = 'comments'
         ordering = ['-created_at']
         verbose_name = '评论'

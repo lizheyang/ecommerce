@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block page_content %}
+<div class="container">
+<div class="row" style="margin-bottom: 40px;">
+	<h3>{{ message }}</h3>
+	<a class="btn btn-primary" href="{% url 'order_page' order_id %}">返回订单页</a>
+</div>
+</div>
+
+{% endblock %}

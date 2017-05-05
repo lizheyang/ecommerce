@@ -4,7 +4,8 @@
 
 {% block account_content %}
     <div class="row">
-        <div class="col-md-6" style="">
+        <div class="col-md-1"></div>
+        <div class="col-md-10" style="">
         {% if addresses %}
             {% for addr in addresses %}
             <div class="addr" style="border:1px solid #E8E8E8; padding: 5px; margin: 5px;">
@@ -22,5 +23,6 @@
             <a class="btn btn-primary" href="{% url 'add_address' %}">创建收货地址</a>
             </div>
         </div>
+        <div class="col-md-1"></div>
     </div>
 {% endblock %}

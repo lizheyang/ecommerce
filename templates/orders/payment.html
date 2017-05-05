@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+{% block title %}支付{% endblock %}
+
+{% block page_content %}
+<div class="container">
+	<div class="row">
+		<div class="col-md-2"></div>
+		<div class="col-md-4">
+			<img src="{% static 'imgs/payment.jpg' %}" class="img-responsive">
+
+		</div>
+		<div class="col-md-4" style="margin-top: 6 0px;">
+			<div>订单号：<br />{{ order.id }}</div>
+			<hr />
+			<div>订单金额：<br />{{ order.total }}</div>
+			<hr />
+			<div>付款提示：<br />
+			请用支付宝扫码左方二维码并支付响应金额，将订单号作为转账备注。
+			</div>
+			<hr />
+			<div><a href="{% url 'confirm_payment' order.id %}" class="btn btn-primary" onclick="alert('正在查询付款状态，请等候')">我已完成付款</a></div>
+		</div>
+		<div class="col-md-2"></div>
+	</div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "accounts/accounts-base.html" %}
+
+{% block title %} 我的收藏 {% endblock %}
+
+{% block account_content %}
+<div class="row">
+<div class="col-md-1"></div>
+<div class="col-md-10">
+	{% if products %}
+		<div class="row">
+		{% for p in products %}
+		<div class="col-md-3">
+		<div class="thumbnail">
+			<img src="{{ p.thumb.url }}" alt="缩略图" class="img-responsive">
+			<hr style="margin-bottom: 0px;" />
+			<div class="caption">
+				<div class="row-1">
+				<strong> ¥ {{ p.price }}</strong>
+				</div>
+				<div class="row-2" style=""; overflow:hidden">
+				<a href="/product/{{ p.id }}" >{{ p.name }}</a>
+				<!-- <p>{{ p.subtitle }}</p> -->
+				<a href="{% url 'delete_collection' p.id %}">
+				<button class="btn btn-default btn-block">删除</button>
+				</a>
+				</div>
+			</div>
+		</div>
+		</div>	
+		{% endfor %}
+		</div>
+	{% else %}
+	<p>您还没有收藏过商品</p>
+	{% endif %}
+</div>
+<div class="col-md-1"></div>
+</div>
+{% endblock %}

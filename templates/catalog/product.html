@@ -75,7 +75,10 @@
                 
             </div>
             <div id='collect-btn'>
-                <button type="button" class="btn btn-default btn-block">收藏商品</button>
+                <a href="{% url 'add_collection' p.id %}">
+                <button class="btn btn-default btn-block">收藏商品
+                </button>
+                </a>
             </div>
         </div>
     </div>

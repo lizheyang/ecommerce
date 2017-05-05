@@ -20,4 +20,7 @@ urlpatterns = [
     url('^show_address/$', views.show_address, name='show_address'),
     url('^add_address/$', views.add_address, name='add_address'),
     url('^show_orders/$', views.show_orders, name='show_orders'),
+    url('^show_collections/$', views.show_collections, name='show_collections'),
+    url('^add_collection/(?P<product_id>[0-9]+)/$', views.add_collection, name='add_collection'),
+    url('^delete_collection/(?P<product_id>[0-9]+)/$', views.delete_collection, name='delete_collection'),
     ]
