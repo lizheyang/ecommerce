@@ -45,6 +45,7 @@ INSTALLED_APPS = (
     'accounts',
     'cart',
     'orders',
+    'menus',
 )
 
 MIDDLEWARE_CLASSES = (

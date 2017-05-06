@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}{{ menu.name }}{% endblock %}
+
+{% block page_content %}
+<div class="container">
+    <div class="row">
+	    <div class="col-md-6" style="float: none;margin-left:auto; margin-right:auto;">
+	    	<div>
+	    	<h1>{{ menu.name }}</h1>
+	    	<h4>{{ menu.description }}</h4>
+	    	<h4>{{ menu.materials }}</h4>
+	    	</div>
+			{% for step in menu_steps %}
+			<div class="content clearfix">
+					<em class="step" id="step_num1">{{ step.no }}</em>
+					<div class="c">
+					<p>{{ step.detail }}</p>
+					<p><img class="img-responsive" src="{{ step.img.url }}" alt=""></p>
+					</div>
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+</div>
+{% endblock %}

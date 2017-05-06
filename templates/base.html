@@ -18,17 +18,17 @@
     <div style="">
 			<nav class="navbar navbar-default" role="navigation">
 				<div class="navbar-header">
-					<a class="navbar-brand" href="/">Home</a>
+					<a class="navbar-brand" href="/">主页</a>
 				</div>
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-					<!-- <ul class="nav navbar-nav">
+					<ul class="nav navbar-nav">
 						<li>
-							 <a href="#">全部商品</a>
+							 <a href="{% url 'show_menus' %}">菜谱</a>
 						</li>
-						<li>
+						<!-- <li>
 							 <a href="#">Link</a>
-						</li>
-					</ul> -->
+						</li> -->
+					</ul>
 					<ul class="nav navbar-nav navbar-right">
 						<li>
 							 <a href="{% url 'show_cart' %}">购物车</a>

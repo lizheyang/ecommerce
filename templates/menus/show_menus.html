@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}菜谱{% endblock %}
+
+{% block page_content %}
+<div class="container">
+    <div class="row">
+    {% if request.user and request.user.is_staff %}
+    <div>
+    <a href="{% url 'spide_menus' %}" class="btn btn-primary">爬取菜谱</a>
+    </div>
+    {% endif %}
+	    <div>
+	    {% if menus %}
+			{% for menu in menus %}
+			<div><a href="{% url 'menu_page' menu.folder_name %}">{{ menu.name }}</a></div>
+			{% endfor %}
+	    {% else %}
+	    还没有创建菜谱
+	    {% endif %}
+		</div>
+	</div>
+</div>
+{% endblock %}
