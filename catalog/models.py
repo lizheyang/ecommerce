@@ -83,3 +83,6 @@ class Comment(models.Model):
         ordering = ['-created_at']
         verbose_name = '评论'
         verbose_name_plural = '评论'
+
+    def __str__(self):
+        return self.author.username + '对' + self.product.name + '的评论'

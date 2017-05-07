@@ -7,18 +7,42 @@
     <div class="row">
 	    <div class="col-md-6" style="float: none;margin-left:auto; margin-right:auto;">
 	    	<div>
-	    	<h1>{{ menu.name }}</h1>
+	    	<div class="row">
+		    	<div class="col-md-8">
+		    	<h1>{{ menu.name }}</h1>
+		    	</div>
+		    	<div class="col-md-4">
+		    	{% if request.user and request.user.is_staff %}
+				<a href="{% url 'delete_menu' menu.folder_name %}" style="float: right; font-size: 10px; margin-top: 20px; margin-left: 10px;" class="btn btn-primary">
+				<span class="glyphicon glyphicon-trash"></span>  删除
+				</a>
+				{% endif %}
+				{% if menu not in my_collect_menus %}
+		    	<a href="{% url 'add_collection' menu.folder_name %}" style="float: right; font-size: 10px; margin-top: 20px;" class="btn btn-primary">
+				<span class="glyphicon glyphicon-star-empty"></span>  收藏
+				</a>
+				{% else %}
+				<a href="#" style="float: right; margin-top: 20px;font-size:10px;" class="btn  btn-sm btn-info">
+				<span class="glyphicon glyphicon-star"></span> 已收藏
+				</a>
+		    	{% endif %}
+				</div>
+		    	</div>
+	    	<hr>
 	    	<h4>{{ menu.description }}</h4>
-	    	<h4>{{ menu.materials }}</h4>
+	    	<hr>
+	    	<h4>用料： {{ menu.materials }}</h4>
+	    	<hr>
 	    	</div>
 			{% for step in menu_steps %}
 			<div class="content clearfix">
-					<em class="step" id="step_num1">{{ step.no }}</em>
+					<h3>步骤{{ step.no }}:</h3>
 					<div class="c">
 					<p>{{ step.detail }}</p>
 					<p><img class="img-responsive" src="{{ step.img.url }}" alt=""></p>
 					</div>
 			</div>
+			<hr>
 			{% endfor %}
 		</div>
 	</div>

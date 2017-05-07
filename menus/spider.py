@@ -14,7 +14,9 @@ class UrlManager(object):
         self.base_url = 'http://so.meishi.cc/?q=%E5%B1%B1%E8%8D%AF&sort=time&page='
         self.url_nums = new_num
         self.url_to_parser = []
-        self.url_already_parser = []
+
+        db_menus = Menu.objects.all()
+        self.url_already_parser = [menu.url for menu in db_menus]
 
     def get_page_content(self, url):
         user_agent = 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) ' \
@@ -53,7 +55,7 @@ class UrlManager(object):
         #获取总菜谱数量
         menus_total_num = int(soup.find(class_="search2015_path").em.string.strip().replace(',', ''))
         # page_total_num = menus_total_num // 20 + 1
-        page_total_num = 70
+        page_total_num = 40
         print('一共有%s页山药食谱' % page_total_num)
 
         while len(self.url_to_parser) < self.url_nums:
@@ -119,24 +121,27 @@ class MenuParser(object):
         #         with open(step['step_no']+'.jpg', 'wb') as img:
         #             time.sleep(1)
         #             img.write(requests.get(step['step_img_url']).content)
-        menu = Menu()
-        menu.name = menu_name
-        menu.url = url
-        menu.folder_name = folder_name
-        menu.description = menu_description
-        menu.materials = menu_materials
-        menu.save()
-        if menu.pk:
-            for step in steps_list:
-                with open(step['step_no'] + '.jpg', 'wb') as img:
-                    time.sleep(1)
-                    img.write(requests.get(step['step_img_url']).content)
-                ms = MenuStep()
-                ms.menu = menu
-                ms.no = int(step['step_no'])
-                ms.detail = step['step_detail']
-                ms.img = 'menus/%s/%s.jpg' % (folder_name, step['step_no'])
-                ms.save()
+        try:
+            menu = Menu()
+            menu.name = menu_name
+            menu.url = url
+            menu.folder_name = folder_name
+            menu.description = menu_description
+            menu.materials = ','.join(menu_materials)
+            menu.save()
+            if menu.pk:
+                for step in steps_list:
+                    with open(step['step_no'] + '.jpg', 'wb') as img:
+                        time.sleep(1)
+                        img.write(requests.get(step['step_img_url']).content)
+                    ms = MenuStep()
+                    ms.menu = menu
+                    ms.no = int(step['step_no'])
+                    ms.detail = step['step_detail']
+                    ms.img = 'menus/%s/%s.jpg' % (folder_name, step['step_no'])
+                    ms.save()
+        except Exception as e:
+            return False, '存储失败%s' % e
         os.chdir(old_path)
         return True, '解析并保存菜谱%s成功' % menu_name
 

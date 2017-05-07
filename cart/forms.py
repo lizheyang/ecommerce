@@ -5,6 +5,7 @@ class AddToCartForm(forms.Form):
     quantity = forms.IntegerField(widget=forms.TextInput(
         attrs={'size': '2', 'value': '1', 'class': 'quantity'}),
         error_messages={'invalid': '请输入一个有效的数字'},
+        label='数量',
         min_value=1)
     product_id = forms.IntegerField(widget=forms.HiddenInput())
 

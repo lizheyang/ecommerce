@@ -11,7 +11,8 @@ from ecommerce.settings import MEDIA_ROOT
 from .forms import UserProfileForm, UserAddressForm
 from .models import UserProfile, UserAddress, UserCollection
 from orders.models import Order
-from catalog.models import Product
+from menus.models import Menu
+from .utils import get_my_collections
 
 
 def register(request):
@@ -37,6 +38,8 @@ def register(request):
 
 @login_required
 def my_account(request):
+    my_orders = Order.objects.filter(user=request.user).order_by('-created_at')[:3]
+    menus = get_my_collections(request)[:3]
     return render(request, 'accounts/my_account.html', locals())
 
 
@@ -144,17 +147,14 @@ def show_orders(request):
 
 @login_required
 def show_collections(request):
-    my_collections = UserCollection.objects.filter(user=request.user).order_by('-created_at')
-    products = []
-    if my_collections:
-        products = [col.product for col in my_collections]
+    menus = get_my_collections(request)
     return render(request, 'accounts/show_collections.html', locals())
 
 
 @login_required
-def add_collection(request, product_id):
+def add_collection(request, menu_folder):
     collection = UserCollection()
-    collection.product = Product.objects.get(id=product_id)
+    collection.menu = Menu.objects.get(folder_name=menu_folder)
     collection.user = request.user
     collection.save()
     url = urlresolvers.reverse('show_collections')
@@ -162,9 +162,9 @@ def add_collection(request, product_id):
 
 
 @login_required
-def delete_collection(request, product_id):
-    product = Product.objects.get(id=product_id)
-    collection = UserCollection.objects.get(product=product, user=request.user)
+def delete_collection(request, menu_folder):
+    menu = Menu.objects.get(folder_name=menu_folder)
+    collection = UserCollection.objects.get(menu=menu, user=request.user)
     collection.delete()
     url = urlresolvers.reverse('show_collections')
     return HttpResponseRedirect(url)

@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from catalog.models import Product
+from menus.models import Menu
 
 
 class UserProfile(models.Model):
@@ -45,14 +46,14 @@ class UserAddress(models.Model):
 
 
 class UserCollection(models.Model):
-    product = models.ForeignKey(Product)
+    menu = models.ForeignKey(Menu, null=True)
     user = models.ForeignKey(User)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         app_label = 'accounts'
-        verbose_name = '商品收藏'
-        verbose_name_plural = '商品收藏'
+        verbose_name = '菜单收藏'
+        verbose_name_plural = '菜单收藏'
 
     def __str__(self):
-        return self.user.username + '收藏的：' + self.product.name
+        return self.user.username + '收藏的：' + self.menu.name

@@ -4,20 +4,63 @@
 
 {% block page_content %}
 <div class="container">
-    <div class="row">
+    <div class="row" style="padding-top: 20px;">
+    <div class="col-md-2">
     {% if request.user and request.user.is_staff %}
-    <div>
-    <a href="{% url 'spide_menus' %}" class="btn btn-primary">爬取菜谱</a>
-    </div>
+    <a href="{% url 'spide_menus' %}" class="btn btn-primary">一键爬取菜谱</a>  
     {% endif %}
-	    <div>
+    </div>
+	    <div class="col-md-8" style=";">
+	    <div class="row">
 	    {% if menus %}
 			{% for menu in menus %}
-			<div><a href="{% url 'menu_page' menu.folder_name %}">{{ menu.name }}</a></div>
+			<div class="sig-menu" style="border-bottom: 1px #e8e8e8 dotted;margin-bottom: 20px;">
+			<div>
+				<p>
+				<a href="{% url 'menu_page' menu.folder_name %}" style="font-size:20px">
+				{{ menu.name }}
+				</a>
+				<span style="float: right;">{{ menu.created_at |date:"Y年m月d日" }}</span>
+				</p>
+			</div>
+			<p class="">{{ menu.description }}</p>
+			
+			<div class="clearfix">
+			{% if request.user and request.user.is_staff %}
+			<a href="{% url 'delete_menu' menu.folder_name %}" style="float: right; margin-bottom: 5px;font-size:10px; margin-left: 10px;" class="btn  btn-sm btn-danger">
+			<span class="glyphicon glyphicon-trash"></span> 删除
+			</a>
+			{% endif %}
+			{% if menu not in my_collect_menus %}
+			<a href="{% url 'add_collection' menu.folder_name %}" style="float: right; margin-bottom: 5px;font-size:10px;" class="btn btn-primary btn-sm">
+			<span class="glyphicon glyphicon-star-empty"></span> 收藏
+			</a>
+			{% else %}
+			<a href="#" style="float: right; margin-bottom: 5px;font-size:10px;" class="btn  btn-sm btn-info">
+			<span class="glyphicon glyphicon-star"></span> 已收藏
+			</a>
+			{% endif %}
+
+			</div>			
+			</div>
 			{% endfor %}
 	    {% else %}
 	    还没有创建菜谱
 	    {% endif %}
+		</div>
+		<div class="clearfix" style="float:right;">
+			<ul class="pagination" >
+				{% if products.has_previous %}
+			    <li><a href="?page={{ menus.previous_page_number }}">&laquo;</a></li>
+			    {% endif %}
+			    {% for num in paginator.page_range %}
+			    <li><a href="?page={{ num }}">{{ num }}</a></li>
+			    {% endfor %}
+			    {% if products.has_next %}
+			    <li><a href="?page={{ menus.next_page_number }}">&raquo;</a></li>
+			    {% endif %}
+			</ul>
+			</div>
 		</div>
 	</div>
 </div>

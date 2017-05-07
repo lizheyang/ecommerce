@@ -6,10 +6,61 @@
 <div class="row">
 <div class="col-md-1"></div>
 <div class="col-md-10">
-<p>hello {{ user.username }}</p>
-<a  class="btn btn-primary" href="/accounts/show_profile/">
-        show_profile
-</a>
+	<h3>你好 {{ user.username }}</h3>
+	<hr>
+	<div class="history-orders">
+	<p style="font-size: 20px;">订单列表：</p>
+				{% if my_orders %}
+	            {% for order in my_orders %}
+	            {% if order.id %}
+	            <div class="order" style="border:1px solid #E8E8E8; padding: 20px; margin: 10px;;">
+	            <div>
+	                <a href="/order/{{ order.id }}"><span style="font-size: 16px;"> 订单: {{ order.id }} </span></a>
+
+	                
+	                {% if order.status == 1 %}
+	                <span class="label label-warning" style="float: right;">未支付</span>
+	                {% elif order.status == 2 %}
+	                <span class="label label-primary" style="float: right;">已支付</span>
+	                {% elif order.status == 3 %}
+	                <span class="label label-primary" style="float: right;">已发货</span>
+	                {% elif order.status == 4 %}
+	                <span class="label label-primary" style="float: right;">已完成</span>
+	                {% elif order.status == 5 %}
+	                <span class="label label-default" style="float: right;">已取消</span>
+	                {% endif %}
+	            </div>
+	            <p>日期：{{ order.created_at |date:"Y年m月d日 H:i:s"}}</p>
+	            </div>
+	         	{% endif %}
+	            {% endfor %}
+	            <p class="clearfix"><a href="{% url 'show_orders' %}" style="float:right" >查看更多>>></a></p>
+	            {% else %}
+	            <div><p>您还没有历史订单</p></div>
+	        	{% endif %}
+	</div>
+	<hr>
+	<div class="my_collections">
+	<p style="font-size: 20px;">我的收藏：</p>
+		{% if menus %}
+			{% for menu in menus %}
+			<div class="sig-menu" style="border: 1px #e8e8e8 solid;margin: 10px;padding: 20px;">
+			<div>
+				<p>
+				<a href="{% url 'menu_page' menu.folder_name %}" style="font-size:20px">
+				{{ menu.name }}
+				</a>
+				<span style="float: right;">{{ menu.created_at |date:"Y年m月d日" }}</span>
+				</p>
+			</div>
+			<p class="">{{ menu.description }}</p>
+			</div>
+			{% endfor %}
+			<p class="clearfix"><a href="{% url 'show_collections' %}" style="float:right" >查看更多>>></a></p>
+	    {% else %}
+	    还没有收藏菜谱
+	    {% endif %}
+	</div>
 </div>
 <div class="col-md-1"></div>
 </div>
