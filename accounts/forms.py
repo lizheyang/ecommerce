@@ -1,5 +1,5 @@
 from django import forms
-from .models import UserProfile, UserAddress
+from .models import UserProfile, UserAddress, UserFeedback
 
 
 class UserProfileForm(forms.ModelForm):
@@ -23,5 +23,11 @@ class UserAddressForm(forms.ModelForm):
     class Meta:
         model = UserAddress
         exclude = ('user',)
+
+
+class UserFeedbackForm(forms.ModelForm):
+    class Meta:
+        model = UserFeedback
+        exclude = ('user', 'reply', 'created_at', 'status_code')
 
 

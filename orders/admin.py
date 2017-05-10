@@ -16,7 +16,7 @@ class OrderAdminForm(forms.ModelForm):
 
 
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('id' ,'user', 'status', 'created_at')
+    list_display = ('id', 'user', 'status', 'created_at')
     fields = ('id', 'user', 'address', 'status', 'express_company', 'express_number')
     readonly_fields = ('id', 'user')
     form = OrderAdminForm

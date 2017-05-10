@@ -1,0 +1,23 @@
+{% extends "accounts/accounts-base.html" %}
+
+{% load bootstrap3 %}
+
+{% block title %}反馈详情{% endblock %}
+
+{% block account_content %}
+<div style="margin-left:auto; margin-right:auto; width:50%">
+	<h2>{{ feedback.title }}</h2>
+	<p>{{ feedback.created_at }}</p>
+	<hr>
+	<h4>内容：</h4>
+	<p>{{ feedback.content }}</p>
+	<hr>
+	
+	{% if feedback.status_code == 1 %}
+	<p>尚未回复</p>
+	{% else %}
+	<h4>回复：</h4>
+	<p>{{ feedback.reply }}</p>
+	{% endif %}
+</div>
+{% endblock %}

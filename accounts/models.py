@@ -57,3 +57,25 @@ class UserCollection(models.Model):
 
     def __str__(self):
         return self.user.username + '收藏的：' + self.menu.name
+
+
+class UserFeedback(models.Model):
+    STATUS = (
+        (1, '未回复'),
+        (2, '已回复'),
+    )
+    user = models.ForeignKey(User)
+    title = models.CharField(max_length=50,verbose_name='标题')
+    content = models.TextField(verbose_name='内容')
+    reply = models.TextField(verbose_name='回复', blank=True, null=True)
+    status_code = models.IntegerField(choices=STATUS, default=1)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        app_label = 'accounts'
+        verbose_name = '用户反馈'
+        verbose_name_plural = '用户反馈'
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return '用户' + self.user.username + '：' + str(self.title)

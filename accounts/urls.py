@@ -23,4 +23,7 @@ urlpatterns = [
     url('^show_collections/$', views.show_collections, name='show_collections'),
     url('^add_collection/(?P<menu_folder>[a-z_0-9]+)/$', views.add_collection, name='add_collection'),
     url('^delete_collection/(?P<menu_folder>[a-z_0-9]+)/$', views.delete_collection, name='delete_collection'),
+    url('^show_feedbacks/$', views.show_feedbacks, name='show_feedbacks'),
+    url('^add_feedback/$', views.add_feedback, name='add_feedback'),
+    url('^feedback/(?P<feedback_id>[0-9]+)$', views.feedback_detail, name='feedback_detail')
     ]

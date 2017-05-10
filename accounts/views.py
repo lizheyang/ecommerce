@@ -8,8 +8,8 @@ from django.core import urlresolvers
 from django.http import HttpResponseRedirect, HttpResponse
 from django.utils.translation import ugettext as _
 from ecommerce.settings import MEDIA_ROOT
-from .forms import UserProfileForm, UserAddressForm
-from .models import UserProfile, UserAddress, UserCollection
+from .forms import UserProfileForm, UserAddressForm, UserFeedbackForm
+from .models import UserProfile, UserAddress, UserCollection, UserFeedback
 from orders.models import Order
 from menus.models import Menu
 from .utils import get_my_collections
@@ -168,3 +168,35 @@ def delete_collection(request, menu_folder):
     collection.delete()
     url = urlresolvers.reverse('show_collections')
     return HttpResponseRedirect(url)
+
+
+@login_required
+def add_feedback(request):
+    if request.method == 'POST':
+        postdata = request.POST.copy()
+        form = UserFeedbackForm(postdata)
+        if form.is_valid():
+            feedback = UserFeedback()
+            feedback.user = request.user
+            feedback.title = postdata.get('title')
+            feedback.content = postdata.get('content')
+            feedback.reply = ''
+            feedback.status_code = 1
+            feedback.save()
+            url = urlresolvers.reverse('show_feedbacks')
+            return HttpResponseRedirect(url)
+    else:
+        form = UserFeedbackForm()
+        return render(request, 'accounts/add_feedback.html', locals())
+
+
+@login_required
+def show_feedbacks(request):
+    feedbacks = UserFeedback.objects.filter(user=request.user)
+    return render(request, 'accounts/show_feedbacks.html', locals())
+
+
+@login_required
+def feedback_detail(request, feedback_id):
+    feedback = get_object_or_404(UserFeedback, id=feedback_id)
+    return render(request, 'accounts/feedback_detail.html', locals())

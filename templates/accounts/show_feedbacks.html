@@ -1,0 +1,33 @@
+{% extends "accounts/accounts-base.html" %}
+
+{% block title %} 我的反馈 {% endblock %}
+
+{% block account_content %}
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-10" style="">
+        {% if feedbacks %}
+            {% for back in feedbacks %}
+            <div class="order" style="border:1px solid #E8E8E8; padding: 20px; margin: 10px;;">
+            <div>
+                <a href="{% url 'feedback_detail' back.id %}"><span style="font-size: 16px;"> {{ back.title }} </span></a>
+                
+                {% if back.status_code == 1 %}
+                <span class="label label-warning" style="float: right;">未回复</span>
+                {% else %}
+                <span class="label label-primary" style="float: right;">已回复</span>
+                {% endif %}
+            </div>
+            <p>日期：{{ back.created_at |date:"Y年m月d日 H:i:s"}}</p>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div><p>您还没有进行过反馈</p></div>
+        {% endif %}
+            <div>
+            <a class="btn btn-primary" href="{% url 'add_feedback' %}">网站反馈</a>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+{% endblock %}
